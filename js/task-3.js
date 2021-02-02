@@ -6,17 +6,19 @@ const makeTransaction = transaction => {
   return new Promise((resoulve, reject) => {
     const delay = randomIntegerFromInterval(200, 500);
     const canProcess = Math.random() > 0.3;
+    let id = transaction.id;
     setTimeout(() => {
       if (canProcess) {
-        resoulve(transaction.id, delay);
+        const result = { id, delay };
+        resoulve(result);
       }
       reject(transaction.id);
     }, delay);
   });
 };
 
-const logSuccess = (id, time) => {
-  console.log(`Transaction ${id} processed in ${time}ms`);
+const logSuccess = result => {
+  console.log(`Transaction ${result.id} processed in ${result.delay}ms`);
 };
 
 const logError = id => {
